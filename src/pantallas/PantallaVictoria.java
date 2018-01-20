@@ -16,6 +16,11 @@ import base.Jugador;
 import base.LeerFicheroScore;
 import base.PanelJuego;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class PantallaVictoria implements Pantalla {
 
 	private PanelJuego panelJuego;
@@ -42,7 +47,7 @@ public class PantallaVictoria implements Pantalla {
 	@Override
 	public void pintarPantalla(Graphics g) {
 		// Escribir en grafico
-		int posicion = -10;
+		int posicion = 20;
 		actualizarFondo(g);
 		g.setColor(Color.BLACK);
 		g.setFont(panelJuego.getFuente());
@@ -51,17 +56,19 @@ public class PantallaVictoria implements Pantalla {
 		DecimalFormat format = new DecimalFormat("#.##");
 		g.drawString("Time ->" + (format.format(tiempo / 1000000000)), 350, 70);
 		g.setColor(Color.BLUE);
-		// g.drawString("¡Datos del Jugador!", 10, panelJuego.getHeight() / 2 - 100);
-		g.drawString("Victorias -> " + aux.getVictorias(), 10, panelJuego.getHeight() / 2 - 90);
-		g.drawString("Muertes -> " + aux.getMuertes(), 10, panelJuego.getHeight() / 2 - 10);
-		g.drawString("<- Mejores Tiempos ->", panelJuego.getWidth() / 2 - 70, panelJuego.getHeight() / 2 - 90);
+		g.drawString("¡Datos de " + aux.getNombre() + "!", panelJuego.getWidth() / 2 - 200,
+				panelJuego.getHeight() / 2 - 150);
+		g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 450,
+				panelJuego.getHeight() / 2 - 60);
+		g.drawString("Muertes -> " + aux.getMuertes(), panelJuego.getWidth() / 2 - 450,
+				panelJuego.getHeight() / 2 + 20);
+		g.drawString("<- Mejores Tiempos ->", panelJuego.getWidth() / 2 - 20, panelJuego.getHeight() / 2 - 60);
 		aux.ordenarTiempos();
 		for (int i = 0; i < aux.getTiempos().size(); i++) {
-			g.drawString((format.format(aux.getTiempos().get(i) / 1000000000)), panelJuego.getWidth() / 2 + 150,
+			g.drawString((format.format(aux.getTiempos().get(i) / 1000000000)), panelJuego.getWidth() / 2 + 230,
 					panelJuego.getHeight() / 2 + posicion);
-			posicion += 100;
+			posicion += 90;
 		}
-
 	}
 
 	public void modificarFichero() {
@@ -72,11 +79,10 @@ public class PantallaVictoria implements Pantalla {
 		// Modificamos el jugador
 		if (jugador != null) {
 			jugador.addTiempo(tiempo);
-
 			aux = new Jugador("", jugador.getMuertes(), jugador.getVictorias() + 1, jugador.getTiempos());
 		} else {
 			ArrayList<Float> tiempos = new ArrayList<>();
-			System.out.println(tiempos.get(0) + " weee");
+			tiempos.add(tiempo);
 			aux = new Jugador("", 0, 1, tiempos);
 		}
 		// Lo guardamos en el fichero
@@ -117,20 +123,15 @@ public class PantallaVictoria implements Pantalla {
 
 	@Override
 	public void moverRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void pulsarRaton(MouseEvent e) {
 		panelJuego.setPantalla(new PantallaJuego(panelJuego));
-
 	}
 
 	@Override
 	public void mantenerPulsadoRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -151,5 +152,4 @@ public class PantallaVictoria implements Pantalla {
 		int aleatorio = r.nextInt(cantidad) + minimo;
 		return aleatorio;
 	}
-
 }

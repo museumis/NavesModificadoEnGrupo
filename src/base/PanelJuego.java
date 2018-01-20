@@ -13,6 +13,11 @@ import javax.swing.JPanel;
 import pantallas.Pantalla;
 import pantallas.PantallaBienvenida;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class PanelJuego extends JPanel implements Runnable {
 
 	private static final long serialVersionUID = 1L;
@@ -51,7 +56,6 @@ public class PanelJuego extends JPanel implements Runnable {
 			pantallaActual.ejecutarFrame();
 
 		}
-
 	}
 
 	/**
@@ -91,7 +95,7 @@ public class PanelJuego extends JPanel implements Runnable {
 	}
 
 	/**
-	 * Metodo para cambia la pantall
+	 * Metodo para cambia la pantalla
 	 * 
 	 * @param pantallaActual
 	 */
@@ -106,5 +110,4 @@ public class PanelJuego extends JPanel implements Runnable {
 	public void setFuente(Font fuente) {
 		this.fuente = fuente;
 	}
-
 }

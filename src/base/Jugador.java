@@ -3,6 +3,12 @@ package base;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class Jugador implements Serializable {
 
 	private static final long serialVersionUID = 1L;

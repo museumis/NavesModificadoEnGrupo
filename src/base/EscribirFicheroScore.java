@@ -6,6 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class EscribirFicheroScore {
 
 	/**

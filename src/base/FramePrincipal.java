@@ -1,13 +1,12 @@
 package base;
 
-import java.awt.Cursor;
 import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-
 import javax.swing.JFrame;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
 public class FramePrincipal {
 
 	private JFrame frame;
@@ -26,7 +25,6 @@ public class FramePrincipal {
 	}
 
 	public void iniciarComponentes() {
-
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setUndecorated(false);
 		frame.setLayout(new GridLayout());
@@ -34,9 +32,8 @@ public class FramePrincipal {
 		juego = new PanelJuego();
 
 		frame.add(juego);
-
 	}
+
 	public void iniciarListened() {
 	}
-
 }

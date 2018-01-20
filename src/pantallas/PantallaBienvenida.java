@@ -7,10 +7,15 @@ import java.util.Random;
 
 import base.PanelJuego;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class PantallaBienvenida implements Pantalla {
 
 	// Panel sobre el que actuar
-	PanelJuego panelJuego;	
+	PanelJuego panelJuego;
 	private Color colorInicio;
 
 	/*
@@ -21,13 +26,10 @@ public class PantallaBienvenida implements Pantalla {
 		this.panelJuego = panelJuego;
 		inicializarPantalla();
 		redimensionarPantalla();
-
 	}
 
 	@Override
 	public void inicializarPantalla() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -56,14 +58,11 @@ public class PantallaBienvenida implements Pantalla {
 
 	@Override
 	public void moverRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void pulsarRaton(MouseEvent e) {
 		panelJuego.setPantalla(new PantallaJuego(panelJuego));
-
 	}
 
 	@Override
@@ -72,8 +71,6 @@ public class PantallaBienvenida implements Pantalla {
 
 	@Override
 	public void mantenerPulsadoRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -88,5 +85,4 @@ public class PantallaBienvenida implements Pantalla {
 		int aleatorio = r.nextInt(cantidad) + minimo;
 		return aleatorio;
 	}
-
 }

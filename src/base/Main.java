@@ -1,25 +1,24 @@
 package base;
 
-/**
- * @author Ismael Martin
- * @author Alejandro Bajo 
- */
 import java.awt.EventQueue;
 
-public class Main {
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
 
+public class Main {
 	public static void main(String[] args) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						FramePrincipal ventana = new FramePrincipal();
-						ventana.iniciar();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FramePrincipal ventana = new FramePrincipal();
+					ventana.iniciar();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-	});
+			}
+		});
 
 	}
-
 }

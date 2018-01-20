@@ -16,6 +16,11 @@ import base.Jugador;
 import base.LeerFicheroScore;
 import base.PanelJuego;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class PantallaGameOver implements Pantalla {
 
 	private PanelJuego panelJuego;
@@ -75,7 +80,7 @@ public class PantallaGameOver implements Pantalla {
 	@Override
 	public void pintarPantalla(Graphics g) {
 		// Escribir en grafico
-		int posicion = 300;
+		int posicion = 20;
 		actualizarFondo(g);
 		g.setColor(Color.RED);
 		g.setFont(panelJuego.getFuente());
@@ -84,16 +89,18 @@ public class PantallaGameOver implements Pantalla {
 		DecimalFormat format = new DecimalFormat("#.##");
 		g.drawString("Time -> " + (format.format(tiempo / 1000000000)), 500, 70);
 		g.setColor(Color.BLUE);
-		g.drawString("¡Datos del Jugador!", panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2 - 100);
-		g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2);
-		g.drawString("Muertes -> " + aux.getMuertes(), panelJuego.getWidth() / 2 - 200,
-				panelJuego.getHeight() / 2 + 100);
-		g.drawString("<- Tiempos ->", panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2 + 200);
+		g.drawString("¡Datos de " + aux.getNombre() + "!", panelJuego.getWidth() / 2 - 200,
+				panelJuego.getHeight() / 2 - 150);
+		g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 450,
+				panelJuego.getHeight() / 2 - 60);
+		g.drawString("Muertes -> " + aux.getMuertes(), panelJuego.getWidth() / 2 - 450,
+				panelJuego.getHeight() / 2 + 20);
+		g.drawString("<- Mejores Tiempos ->", panelJuego.getWidth() / 2 - 20, panelJuego.getHeight() / 2 - 60);
 		aux.ordenarTiempos();
 		for (int i = 0; i < aux.getTiempos().size(); i++) {
-			g.drawString((format.format(aux.getTiempos().get(i) / 1000000000)), panelJuego.getWidth() / 2 - 200,
+			g.drawString((format.format(aux.getTiempos().get(i) / 1000000000)), panelJuego.getWidth() / 2 + 230,
 					panelJuego.getHeight() / 2 + posicion);
-			posicion += 100;
+			posicion += 90;
 		}
 	}
 
@@ -144,5 +151,4 @@ public class PantallaGameOver implements Pantalla {
 		imgFondo = imgFondo.getScaledInstance(panelJuego.getWidth(), panelJuego.getHeight(),
 				BufferedImage.SCALE_SMOOTH);
 	}
-
 }

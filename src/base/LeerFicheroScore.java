@@ -6,6 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class LeerFicheroScore {
 
 	/**
@@ -28,7 +33,7 @@ public class LeerFicheroScore {
 		} catch (IOException e) {
 			// System.out.println("\n --- Fin de lectura ---\n");
 		} catch (ClassNotFoundException e) {
-			System.out.println("Error al leer la clase del fichero");
+			// System.out.println("Error al leer la clase del fichero");
 		} finally {
 			// Cierro flujos
 			try {

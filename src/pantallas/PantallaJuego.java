@@ -22,6 +22,11 @@ import base.PanelJuego;
 import base.Sonidos;
 import base.Sprite;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class PantallaJuego implements Pantalla {
 	// Panel sobre el que actuar
 	PanelJuego panelJuego;
@@ -30,7 +35,7 @@ public class PantallaJuego implements Pantalla {
 	private ArrayList<Sprite> asteroides;
 	private Sprite nave;
 	private Sprite bala;
-	private final int NUMERO_ASTEROIDES = 1;
+	private final int NUMERO_ASTEROIDES = 6;
 	private final String[] RUTA_IMG_ASTEROIDE = { "src//img//golden_star.gif", "src//img//asteroide_3.png",
 			"src//img//space-invaders.png", "src//img//Pacman.png", "src//img//asteroide.png",
 			"src//img//asteroide2.png" };
@@ -92,7 +97,6 @@ public class PantallaJuego implements Pantalla {
 
 	@Override
 	public void pintarPantalla(Graphics g) {
-
 		ocultarRaton();
 		actualizarFondo(g);
 		pintarAsteroide(g);
@@ -115,7 +119,6 @@ public class PantallaJuego implements Pantalla {
 
 			}
 		}
-
 	}
 
 	@Override
@@ -191,7 +194,6 @@ public class PantallaJuego implements Pantalla {
 		// Formato para darle dos decilames
 		DecimalFormat format = new DecimalFormat("#.##");
 		g.drawString("Time: " + (format.format(tiempoJuego / 1000000000)), 20, 20);
-
 	}
 
 	/**
@@ -211,7 +213,6 @@ public class PantallaJuego implements Pantalla {
 
 	public void pintarBala(Graphics g) {
 		bala.pintarSprite(g);
-
 	}
 
 	/**
@@ -235,7 +236,6 @@ public class PantallaJuego implements Pantalla {
 	}
 
 	public void mostrarRaton() {
-
 		this.panelJuego.getRootPane().setCursor(null);
 	}
 
@@ -288,5 +288,4 @@ public class PantallaJuego implements Pantalla {
 		int aleatorio = r.nextInt(cantidad) + minimo;
 		return aleatorio;
 	}
-
 }

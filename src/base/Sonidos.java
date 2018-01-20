@@ -7,6 +7,11 @@ import java.io.FileNotFoundException;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 
+/**
+ * @author Ismael Martín Ramírez
+ * @author Alejandro Bajo Pérez
+ */
+
 public class Sonidos implements Runnable{
 	private String ruta;
 
@@ -29,6 +34,5 @@ public class Sonidos implements Runnable{
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 	}
 }
