@@ -22,7 +22,10 @@ public class Sprite {
 	private int posY;
 	private int velocidadX;
 	private int velocidadY;
-
+	//Sonidos
+	private final String RUTA_SONIDO_REBOTE = "src//sonidos//rebote.mp3";
+	private Sonidos sonChoquePared=new Sonidos(RUTA_SONIDO_REBOTE);
+	//Sonido
 	// Contructores
 	public Sprite() {
 	}
@@ -88,15 +91,22 @@ public class Sprite {
 	public void moverSprite(int anchoPantalla, int altoPantalla) {
 		if (posX >= anchoPantalla - ancho) {
 			this.velocidadX = (-Math.abs(this.velocidadX));
+			new Thread(sonChoquePared).start();
 		}
 		if (posX <= 0) {
 			this.velocidadX = (Math.abs(this.velocidadX));
+			new Thread(sonChoquePared).start();
+
 		}
 		if (posY >= altoPantalla - alto) {
 			this.velocidadY = (-Math.abs(this.velocidadY));
+			new Thread(sonChoquePared).start();
+
 		}
 		if (posY <= 0) {
 			this.velocidadY = (Math.abs(this.velocidadY));
+			new Thread(sonChoquePared).start();
+
 		}
 
 		this.posX = this.posX + this.velocidadX;

@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 
 import base.PanelJuego;
+import base.Sonidos;
 import base.Sprite;
 
 public class PantallaJuego implements Pantalla {
@@ -29,10 +30,18 @@ public class PantallaJuego implements Pantalla {
 	private ArrayList<Sprite> asteroides;
 	private Sprite nave;
 	private Sprite bala;
-	private final int NUMERO_ASTEROIDES = 1;
+	private final int NUMERO_ASTEROIDES = 2;
 	private final String RUTA_IMG_ASTEROIDE = "src//img//golden_star.gif";
 	private final String RUTA_IMG_NAVE = "src//img//nave.png";
 	private final String RUTA_IMG_FONDO = "src//img//heavy.jpg";
+	//Sonidos
+	private final String RUTA_SONIDO_MUERTE = "src//sonidos//muerte.mp3";
+	private Sonidos sonMuertes;
+	private final String RUTA_SONIDO_DISPARO = "src//sonidos//disparo.mp3";
+	private Sonidos sonDisparo;
+	private final String RUTA_SONIDO_ACIERTO = "src//sonidos//acierto.mp3";
+	private Sonidos sonAcierto;
+
 	// Acciones
 	private boolean disparoActivo = true;
 	// Propiedades
@@ -57,6 +66,12 @@ public class PantallaJuego implements Pantalla {
 
 	@Override
 	public void inicializarPantalla() {
+		//Sonido
+		sonMuertes = new Sonidos(RUTA_SONIDO_MUERTE);
+		sonDisparo = new Sonidos(RUTA_SONIDO_DISPARO);
+		sonAcierto = new Sonidos(RUTA_SONIDO_ACIERTO);
+
+
 		// Dibujar fondo
 		cargarFondo();
 		// Iniciar listado de sprites
@@ -74,6 +89,7 @@ public class PantallaJuego implements Pantalla {
 
 	@Override
 	public void pintarPantalla(Graphics g) {
+			
 		ocultarRaton();
 		actualizarFondo(g);
 		pintarAsteroide(g);
@@ -84,11 +100,14 @@ public class PantallaJuego implements Pantalla {
 			bala.pintarSprite(g);
 		}
 		if(quedanAsteroides()) {
+			mostrarRaton();
 			panelJuego.setPantalla(new PantallaVictoria(panelJuego,tiempoJuego));
 		}
 		//Colision de la nave
 		for (int j = 0; j < asteroides.size(); j++) {
 				if(nave.colisionaCon(asteroides.get(j))) {
+					new Thread(sonMuertes).start();
+					mostrarRaton();
 			panelJuego.setPantalla(new PantallaGameOver(panelJuego,tiempoJuego));
 
 		}
@@ -119,6 +138,7 @@ public class PantallaJuego implements Pantalla {
 					asteroides.remove(i);
 					bala = null;
 					disparoActivo = true;
+					new Thread(sonAcierto).start();
 				} else {
 					// Movimiento del asteroide
 					asteroides.get(i).moverSprite(panelJuego.getWidth(), panelJuego.getHeight());
@@ -215,12 +235,8 @@ public class PantallaJuego implements Pantalla {
 		this.panelJuego.getRootPane().setCursor(cursor);
 	}
 	public void mostrarRaton() {
-		// Transparent 16 x 16 pixel cursor image.
-		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-		// Create a new blank cursor.
-		Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
-		// Set the blank cursor to the JFrame.
-		this.panelJuego.getRootPane().setCursor(cursor);
+		
+		this.panelJuego.getRootPane().setCursor(null);
 	}
 
 	@Override
@@ -232,6 +248,8 @@ public class PantallaJuego implements Pantalla {
 	@Override
 	public void pulsarRaton(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e) && disparoActivo) {
+			new Thread(sonDisparo).start();
+
 			bala = new Sprite(16, 40, nave.getPosX() + ((nave.getAncho() / 2) - 4),
 					nave.getPosY() + (nave.getAlto() / 2), 0, -10, Color.green, "");
 			disparoActivo = false;

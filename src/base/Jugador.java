@@ -1,6 +1,8 @@
 package base;
 
-public class Jugador {
+import java.io.Serializable;
+
+public class Jugador{
 
 	private String nombre;
 	private int muertes;

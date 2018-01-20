@@ -1,5 +1,9 @@
 package base;
 
+/**
+ * @author Ismael Martin
+ * @author Alejandro Bajo 
+ */
 import java.awt.EventQueue;
 
 public class Main {
