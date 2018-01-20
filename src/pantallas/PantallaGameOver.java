@@ -8,10 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
-
 import base.EscribirFicheroScore;
 import base.Jugador;
 import base.LeerFicheroScore;
@@ -25,7 +24,7 @@ public class PantallaGameOver implements Pantalla {
 	private final String RUTA_IMG_FONDO = "src//img//pantallaMuerte.jpg";
 	private Image imgFondo = null;
 	private Jugador jugador, aux;
-	
+
 	public PantallaGameOver(PanelJuego panelJuego, float tiempo) {
 		this.panelJuego = panelJuego;
 		this.color = Color.BLACK;
@@ -60,35 +59,42 @@ public class PantallaGameOver implements Pantalla {
 	public void inicializarPantalla() {
 		try {
 			jugador = LeerFicheroScore.leerFichero();
-			}catch (Exception e) {
-			}
-			// Modificamos el jugador
-			if (jugador != null) {
-				aux = new Jugador("", jugador.getMuertes() + 1, jugador.getVictorias(), tiempo);
-			} else {
-				aux = new Jugador("", 1, 0, tiempo);
-			}
-			// Lo guardamos en el fichero
+		} catch (Exception e) {
+		}
+		// Modificamos el jugador
+		if (jugador != null) {
+			aux = new Jugador("", jugador.getMuertes() + 1, jugador.getVictorias(), jugador.getTiempos());
+		} else {
+			ArrayList<Float> tiempos = new ArrayList<>();
+			aux = new Jugador("", 1, 0, tiempos);
+		}
+		// Lo guardamos en el fichero
 		EscribirFicheroScore.escribirFichero(aux);
 	}
 
 	@Override
 	public void pintarPantalla(Graphics g) {
 		// Escribir en grafico
-				actualizarFondo(g);
-				g.setColor(Color.RED);
-				g.setFont(panelJuego.getFuente());
-				g.drawString("No pudiste ganar...", 10, 70);
-				g.setColor(Color.MAGENTA);
-				DecimalFormat format = new DecimalFormat("#.##");
-				g.drawString("Time -> " + (format.format(tiempo / 1000000000)), 500, 70);
-				g.setColor(Color.BLUE);
-				g.drawString("¡Datos del Jugador!", panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2 - 100);
-				g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2);
-				g.drawString("Muertes -> " + aux.getMuertes(), panelJuego.getWidth() / 2 - 200,
-						panelJuego.getHeight() / 2 + 100);
-				g.drawString("Tiempos -> " + (format.format(aux.getTiempo() / 1000000000)), panelJuego.getWidth() / 2 - 200,
-						panelJuego.getHeight() / 2 + 200);
+		int posicion = 300;
+		actualizarFondo(g);
+		g.setColor(Color.RED);
+		g.setFont(panelJuego.getFuente());
+		g.drawString("No pudiste ganar...", 10, 70);
+		g.setColor(Color.MAGENTA);
+		DecimalFormat format = new DecimalFormat("#.##");
+		g.drawString("Time -> " + (format.format(tiempo / 1000000000)), 500, 70);
+		g.setColor(Color.BLUE);
+		g.drawString("¡Datos del Jugador!", panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2 - 100);
+		g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2);
+		g.drawString("Muertes -> " + aux.getMuertes(), panelJuego.getWidth() / 2 - 200,
+				panelJuego.getHeight() / 2 + 100);
+		g.drawString("<- Tiempos ->", panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2 + 200);
+		aux.ordenarTiempos();
+		for (int i = 0; i < aux.getTiempos().size(); i++) {
+			g.drawString((format.format(aux.getTiempos().get(i) / 1000000000)), panelJuego.getWidth() / 2 - 200,
+					panelJuego.getHeight() / 2 + posicion);
+			posicion += 100;
+		}
 	}
 
 	@Override

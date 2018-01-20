@@ -15,7 +15,7 @@ public class FramePrincipal {
 
 	public FramePrincipal() {
 		frame = new JFrame("");
-		frame.setBounds(200, 200, 1000, 500);
+		frame.setBounds(200, 200, 1100, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 

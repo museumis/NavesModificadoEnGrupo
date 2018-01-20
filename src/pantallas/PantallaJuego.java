@@ -30,7 +30,7 @@ public class PantallaJuego implements Pantalla {
 	private ArrayList<Sprite> asteroides;
 	private Sprite nave;
 	private Sprite bala;
-	private final int NUMERO_ASTEROIDES = 6;
+	private final int NUMERO_ASTEROIDES = 1;
 	private final String[] RUTA_IMG_ASTEROIDE = { "src//img//golden_star.gif", "src//img//asteroide_3.png",
 			"src//img//space-invaders.png", "src//img//Pacman.png", "src//img//asteroide.png",
 			"src//img//asteroide2.png" };

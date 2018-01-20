@@ -1,6 +1,7 @@
 package base;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Jugador implements Serializable {
 
@@ -8,7 +9,7 @@ public class Jugador implements Serializable {
 	private String nombre;
 	private int muertes;
 	private int victorias;
-	private float tiempo;
+	private ArrayList<Float> tiempos;
 
 	/**
 	 * Constructores
@@ -16,11 +17,12 @@ public class Jugador implements Serializable {
 	public Jugador() {
 	}
 
-	public Jugador(String nombre, int muertes, int victorias, float tiempo) {
+	public Jugador(String nombre, int muertes, int victorias, ArrayList<Float> tiempos) {
 		this.nombre = nombre;
 		this.muertes = muertes;
 		this.victorias = victorias;
-		this.tiempo = tiempo;
+		this.tiempos = new ArrayList<>();
+		this.tiempos = tiempos;
 	}
 
 	// Getters && Setters
@@ -49,11 +51,28 @@ public class Jugador implements Serializable {
 		this.victorias = victorias;
 	}
 
-	public float getTiempo() {
-		return tiempo;
+	public ArrayList<Float> getTiempos() {
+		return tiempos;
 	}
 
-	public void setTiempo(float tiempo) {
-		this.tiempo = tiempo;
+	public void setTiempos(ArrayList<Float> tiempos) {
+		this.tiempos = tiempos;
+	}
+
+	public void addTiempo(float tiempo) {
+		this.tiempos.add(tiempo);
+	}
+
+	public void ordenarTiempos() {
+		float auxiliar;
+		for (int i = 0; i < tiempos.size() - 1; i++) {
+			for (int j = i + 1; j < tiempos.size(); j++) {
+				if (tiempos.get(i) > tiempos.get(j)) {
+					auxiliar = tiempos.get(j);
+					tiempos.set(j, tiempos.get(i));
+					tiempos.set(i, auxiliar);
+				}
+			}
+		}
 	}
 }
