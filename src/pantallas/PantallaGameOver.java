@@ -12,6 +12,9 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import base.EscribirFicheroScore;
+import base.Jugador;
+import base.LeerFicheroScore;
 import base.PanelJuego;
 
 public class PantallaGameOver implements Pantalla {
@@ -21,7 +24,8 @@ public class PantallaGameOver implements Pantalla {
 	private float tiempo;
 	private final String RUTA_IMG_FONDO = "src//img//pantallaMuerte.jpg";
 	private Image imgFondo = null;
-
+	private Jugador jugador, aux;
+	
 	public PantallaGameOver(PanelJuego panelJuego, float tiempo) {
 		this.panelJuego = panelJuego;
 		this.color = Color.BLACK;
@@ -54,26 +58,37 @@ public class PantallaGameOver implements Pantalla {
 
 	@Override
 	public void inicializarPantalla() {
-		// TODO Auto-generated method stub
-
+		try {
+			jugador = LeerFicheroScore.leerFichero();
+			}catch (Exception e) {
+			}
+			// Modificamos el jugador
+			if (jugador != null) {
+				aux = new Jugador("", jugador.getMuertes() + 1, jugador.getVictorias(), tiempo);
+			} else {
+				aux = new Jugador("", 1, 0, tiempo);
+			}
+			// Lo guardamos en el fichero
+		EscribirFicheroScore.escribirFichero(aux);
 	}
 
 	@Override
 	public void pintarPantalla(Graphics g) {
 		// Escribir en grafico
-		actualizarFondo(g);
-
-		g.setColor(Color.RED);
-		g.setFont(panelJuego.getFuente());
-		g.drawString("No pudiste ganar...", panelJuego.getWidth() / 3, panelJuego.getHeight() / 2);
-		g.setColor(Color.MAGENTA);
-		DecimalFormat format = new DecimalFormat("#.##");
-		g.drawString("Time ->" + (format.format(tiempo / 1000000000)), (panelJuego.getWidth() / 3) + 50,
-				(panelJuego.getHeight() / 2) - 80);
-		g.setColor(color);
-		g.drawLine((panelJuego.getHeight() / 2) + 120, (panelJuego.getHeight() / 2) + 20,
-				(panelJuego.getWidth() / 2) + 120, (panelJuego.getHeight() / 2) + 20);
-
+				actualizarFondo(g);
+				g.setColor(Color.RED);
+				g.setFont(panelJuego.getFuente());
+				g.drawString("No pudiste ganar...", 10, 70);
+				g.setColor(Color.MAGENTA);
+				DecimalFormat format = new DecimalFormat("#.##");
+				g.drawString("Time -> " + (format.format(tiempo / 1000000000)), 500, 70);
+				g.setColor(Color.BLUE);
+				g.drawString("¡Datos del Jugador!", panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2 - 100);
+				g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2);
+				g.drawString("Muertes -> " + aux.getMuertes(), panelJuego.getWidth() / 2 - 200,
+						panelJuego.getHeight() / 2 + 100);
+				g.drawString("Tiempos -> " + (format.format(aux.getTiempo() / 1000000000)), panelJuego.getWidth() / 2 - 200,
+						panelJuego.getHeight() / 2 + 200);
 	}
 
 	@Override

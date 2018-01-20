@@ -30,11 +30,15 @@ public class PantallaJuego implements Pantalla {
 	private ArrayList<Sprite> asteroides;
 	private Sprite nave;
 	private Sprite bala;
-	private final int NUMERO_ASTEROIDES = 2;
-	private final String RUTA_IMG_ASTEROIDE = "src//img//golden_star.gif";
+	private final int NUMERO_ASTEROIDES = 6;
+	private final String[] RUTA_IMG_ASTEROIDE = { "src//img//golden_star.gif", "src//img//asteroide_3.png",
+			"src//img//space-invaders.png", "src//img//Pacman.png", "src//img//asteroide.png",
+			"src//img//asteroide2.png" };
 	private final String RUTA_IMG_NAVE = "src//img//nave.png";
 	private final String RUTA_IMG_FONDO = "src//img//heavy.jpg";
-	//Sonidos
+	private final String RUTA_NAVE_DERECHA = "src//img//derecha.png";
+	private final String RUTA_NAVE_IZQUIERDA = "src//img//izquierda.png";
+	// Sonidos
 	private final String RUTA_SONIDO_MUERTE = "src//sonidos//muerte.mp3";
 	private Sonidos sonMuertes;
 	private final String RUTA_SONIDO_DISPARO = "src//sonidos//disparo.mp3";
@@ -66,11 +70,10 @@ public class PantallaJuego implements Pantalla {
 
 	@Override
 	public void inicializarPantalla() {
-		//Sonido
+		// Sonido
 		sonMuertes = new Sonidos(RUTA_SONIDO_MUERTE);
 		sonDisparo = new Sonidos(RUTA_SONIDO_DISPARO);
 		sonAcierto = new Sonidos(RUTA_SONIDO_ACIERTO);
-
 
 		// Dibujar fondo
 		cargarFondo();
@@ -79,7 +82,7 @@ public class PantallaJuego implements Pantalla {
 		// Iniciar asteroides
 		for (int i = 0; i < NUMERO_ASTEROIDES; i++) {
 			asteroides.add(new Sprite(TAMANIO_ASTEROIDE, TAMANIO_ASTEROIDE, 10, 10, aleatorio(-15, 31),
-					aleatorio(-15, 31), new Color(255, 100, 100), RUTA_IMG_ASTEROIDE));
+					aleatorio(-15, 31), new Color(255, 100, 100), RUTA_IMG_ASTEROIDE[i]));
 		}
 		// Iniciar Nave
 		nave = new Sprite(45, 40, 300, 300, 0, 0, new Color(255, 200, 200), RUTA_IMG_NAVE);
@@ -89,7 +92,7 @@ public class PantallaJuego implements Pantalla {
 
 	@Override
 	public void pintarPantalla(Graphics g) {
-			
+
 		ocultarRaton();
 		actualizarFondo(g);
 		pintarAsteroide(g);
@@ -99,21 +102,19 @@ public class PantallaJuego implements Pantalla {
 		if (bala != null) {
 			bala.pintarSprite(g);
 		}
-		if(quedanAsteroides()) {
+		if (quedanAsteroides()) {
 			mostrarRaton();
-			panelJuego.setPantalla(new PantallaVictoria(panelJuego,tiempoJuego));
+			panelJuego.setPantalla(new PantallaVictoria(panelJuego, tiempoJuego));
 		}
-		//Colision de la nave
+		// Colision de la nave
 		for (int j = 0; j < asteroides.size(); j++) {
-				if(nave.colisionaCon(asteroides.get(j))) {
-					new Thread(sonMuertes).start();
-					mostrarRaton();
-			panelJuego.setPantalla(new PantallaGameOver(panelJuego,tiempoJuego));
+			if (nave.colisionaCon(asteroides.get(j))) {
+				new Thread(sonMuertes).start();
+				mostrarRaton();
+				panelJuego.setPantalla(new PantallaGameOver(panelJuego, tiempoJuego));
 
+			}
 		}
-		}
-	
-		
 
 	}
 
@@ -128,7 +129,6 @@ public class PantallaJuego implements Pantalla {
 				} else {
 					bala.moverSprite(panelJuego.getWidth(), panelJuego.getHeight());
 				}
-
 			}
 
 			// Asteroides
@@ -143,22 +143,18 @@ public class PantallaJuego implements Pantalla {
 					// Movimiento del asteroide
 					asteroides.get(i).moverSprite(panelJuego.getWidth(), panelJuego.getHeight());
 				}
-
-			
-				
 			}
-		
 
 			Thread.sleep(25);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean quedanAsteroides() {
-		if(asteroides.isEmpty()) {
+		if (asteroides.isEmpty()) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
@@ -224,6 +220,9 @@ public class PantallaJuego implements Pantalla {
 	public void actualizarTiempo() {
 		tiempoActual = System.nanoTime();
 		tiempoJuego = tiempoActual - tiempoIncial;
+		// Devulvo a su estado original la nave
+		nave.setRuta(RUTA_IMG_NAVE);
+		nave.cargarSprite();
 	}
 
 	public void ocultarRaton() {
@@ -234,13 +233,22 @@ public class PantallaJuego implements Pantalla {
 		// Set the blank cursor to the JFrame.
 		this.panelJuego.getRootPane().setCursor(cursor);
 	}
+
 	public void mostrarRaton() {
-		
+
 		this.panelJuego.getRootPane().setCursor(null);
 	}
 
 	@Override
 	public void moverRaton(MouseEvent e) {
+		// Si la nave se mueve a la izquierda
+		if ((nave.getPosX() + (nave.getAncho() / 2)) > e.getX()) {
+			nave.setRuta(RUTA_NAVE_IZQUIERDA);
+			// Si la nave se mueve a la derecha
+		} else if ((nave.getPosX() + (nave.getAncho() / 2)) < e.getX()) {
+			nave.setRuta(RUTA_NAVE_DERECHA);
+		}
+		nave.cargarSprite();
 		nave.setPosX(e.getX() - (nave.getAncho() / 2));
 		nave.setPosY(e.getY() - (nave.getAlto() / 2));
 	}
@@ -280,7 +288,5 @@ public class PantallaJuego implements Pantalla {
 		int aleatorio = r.nextInt(cantidad) + minimo;
 		return aleatorio;
 	}
-	
-	
 
 }

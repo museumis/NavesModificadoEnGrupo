@@ -26,7 +26,7 @@ public class PanelJuego extends JPanel implements Runnable {
 	public PanelJuego() {
 		// Iniciar pantalla de bienvenida
 		pantallaActual = new PantallaBienvenida(this);
-		fuente = new Font("TimesRoman", Font.PLAIN, 80);
+		fuente = new Font("TimesRoman", Font.PLAIN, 60);
 		listened();
 		new Thread(this).start();
 
@@ -49,7 +49,7 @@ public class PanelJuego extends JPanel implements Runnable {
 			// Repintar
 			this.repaint();
 			pantallaActual.ejecutarFrame();
-		
+
 		}
 
 	}
@@ -92,6 +92,7 @@ public class PanelJuego extends JPanel implements Runnable {
 
 	/**
 	 * Metodo para cambia la pantall
+	 * 
 	 * @param pantallaActual
 	 */
 	public void setPantalla(Pantalla pantallaActual) {
@@ -105,8 +106,5 @@ public class PanelJuego extends JPanel implements Runnable {
 	public void setFuente(Font fuente) {
 		this.fuente = fuente;
 	}
-	
-
-
 
 }

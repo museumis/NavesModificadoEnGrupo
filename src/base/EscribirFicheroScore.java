@@ -7,30 +7,37 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class EscribirFicheroScore {
-	/*
+
+	/**
 	 * Escribir fichero serializado con los datos del objeto
 	 */
-	public static void escribirObjetoEnFichero(Jugador c) {
+	public static void escribirFichero(Jugador j) {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		File fichero = new File("score.obj");
-
+		fichero.delete();
 		try {
 			// Abrir flujos
-			fos = new FileOutputStream(fichero, true);
+			fos = new FileOutputStream(fichero);
 			oos = new ObjectOutputStream(fos);
-
 			// Escribir en el fichero
-			oos.writeObject(c);
-
+			oos.writeObject(j);
 		} catch (FileNotFoundException e) {
 			System.out.println("No se encontró el fichero");
-			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("No se encontró el fichero");
-			e.printStackTrace();
+			System.out.println("Error de escritura");
+		} finally {
+			// Cierro flujos
+			try {
+				oos.close();
+			} catch (IOException e) {
+				System.out.println("Error de escritura");
+			}
+			try {
+				fos.close();
+			} catch (IOException e) {
+				System.out.println("Error de escritura");
+			}
 		}
-		System.out.println("Fichero serializado creado/modificado con éxito");
 	}// Fin de escribir fichero
-
 }

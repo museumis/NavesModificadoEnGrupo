@@ -29,7 +29,7 @@ public class PantallaVictoria implements Pantalla {
 	private float tiempo;
 	private final String RUTA_IMG_FONDO = "src//img//dragon.jpg";
 	private Image imgFondo = null;
-	Jugador jugador;
+	Jugador jugador, aux;
 
 	public PantallaVictoria(PanelJuego panelJuego, float tiempo) {
 		this.panelJuego = panelJuego;
@@ -49,33 +49,34 @@ public class PantallaVictoria implements Pantalla {
 	public void pintarPantalla(Graphics g) {
 		// Escribir en grafico
 		actualizarFondo(g);
-
 		g.setColor(Color.BLACK);
 		g.setFont(panelJuego.getFuente());
-		g.drawString("¡VICTORIA!", panelJuego.getWidth() / 3, panelJuego.getHeight() / 2);
+		g.drawString("¡VICTORIA!", 10, 70);
 		g.setColor(Color.GREEN);
 		DecimalFormat format = new DecimalFormat("#.##");
-		g.drawString("Time ->" + (format.format(tiempo / 1000000000)), (panelJuego.getWidth() / 3) + 50,
-				(panelJuego.getHeight() / 2) - 80);
-		g.setColor(color);
-		g.drawLine((panelJuego.getHeight() / 2) + 120, (panelJuego.getHeight() / 2) + 20,
-				(panelJuego.getWidth() / 2) + 120, (panelJuego.getHeight() / 2) + 20);
-
-
-		g.drawString("¡Jugador !"+ jugador, 0, panelJuego.getHeight() / 3);
-		
-		// Crear fichero.
+		g.drawString("Time ->" + (format.format(tiempo / 1000000000)), 350, 70);
+		g.setColor(Color.BLUE);
+		g.drawString("¡Datos del Jugador!", panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2 - 100);
+		g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 200, panelJuego.getHeight() / 2);
+		g.drawString("Muertes -> " + aux.getMuertes(), panelJuego.getWidth() / 2 - 200,
+				panelJuego.getHeight() / 2 + 100);
+		g.drawString("Tiempos -> " + (format.format(aux.getTiempo() / 1000000000)), panelJuego.getWidth() / 2 - 200,
+				panelJuego.getHeight() / 2 + 200);
 	}
 
 	public void modificarFichero() {
-		// Si la puntuacion es mayor que la del fichero
-		jugador = LeerFicheroScore.leerObjetoFichero();
-		// Tenemos jugador del fichero
-		jugador.setVictorias(jugador.getVictorias() + 1);
-		// Modificamos jugador
-		 EscribirFicheroScore.escribirObjetoEnFichero(jugador);
-		// Escribimos jugador
-		// Leer fichero y modificarlo
+		try {
+			jugador = LeerFicheroScore.leerFichero();
+		} catch (Exception e) {
+		}
+		// Modificamos el jugador
+		if (jugador != null) {
+			aux = new Jugador("", jugador.getMuertes(), jugador.getVictorias() + 1, tiempo);
+		} else {
+			aux = new Jugador("", 0, 1, tiempo);
+		}
+		// Lo guardamos en el fichero
+		EscribirFicheroScore.escribirFichero(aux);
 	}
 
 	/**

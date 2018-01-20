@@ -22,10 +22,11 @@ public class Sprite {
 	private int posY;
 	private int velocidadX;
 	private int velocidadY;
-	//Sonidos
+	// Sonidos
 	private final String RUTA_SONIDO_REBOTE = "src//sonidos//rebote.mp3";
-	private Sonidos sonChoquePared=new Sonidos(RUTA_SONIDO_REBOTE);
-	//Sonido
+	private Sonidos sonChoquePared = new Sonidos(RUTA_SONIDO_REBOTE);
+
+	// Sonido
 	// Contructores
 	public Sprite() {
 	}
@@ -67,10 +68,10 @@ public class Sprite {
 		try {
 			// Reescalado
 			imgAux = ImageIO.read(new File(this.ruta));
-			imgAux = imgAux.getScaledInstance(this.ancho, this.alto, BufferedImage.SCALE_SMOOTH);		
+			imgAux = imgAux.getScaledInstance(this.ancho, this.alto, BufferedImage.SCALE_SMOOTH);
 			// Dibujar
 			grafico.drawImage(imgAux, 0, 0, null);
-			//Si falla
+			// Si falla
 		} catch (IOException e) {
 			grafico.setColor(this.color);
 			grafico.fillRect(0, 0, this.ancho, this.alto);
@@ -224,4 +225,11 @@ public class Sprite {
 		this.velocidadY = velocidadY;
 	}
 
+	public String getRuta() {
+		return ruta;
+	}
+
+	public void setRuta(String ruta) {
+		this.ruta = ruta;
+	}
 }
