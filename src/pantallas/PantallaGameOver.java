@@ -62,16 +62,21 @@ public class PantallaGameOver implements Pantalla {
 
 	@Override
 	public void inicializarPantalla() {
+		modificarFichero();
+	}
+
+	public void modificarFichero() {
 		try {
 			jugador = LeerFicheroScore.leerFichero();
 		} catch (Exception e) {
 		}
 		// Modificamos el jugador
 		if (jugador != null) {
-			aux = new Jugador("", jugador.getMuertes() + 1, jugador.getVictorias(), jugador.getTiempos());
+			aux = new Jugador(jugador.getNombre(), jugador.getMuertes() + 1, jugador.getVictorias(),
+					jugador.getTiempos());
 		} else {
 			ArrayList<Float> tiempos = new ArrayList<>();
-			aux = new Jugador("", 1, 0, tiempos);
+			aux = new Jugador("Jugador", 1, 0, tiempos);
 		}
 		// Lo guardamos en el fichero
 		EscribirFicheroScore.escribirFichero(aux);
@@ -89,7 +94,7 @@ public class PantallaGameOver implements Pantalla {
 		DecimalFormat format = new DecimalFormat("#.##");
 		g.drawString("Time -> " + (format.format(tiempo / 1000000000)), 500, 70);
 		g.setColor(Color.BLUE);
-		g.drawString("¡Datos de " + aux.getNombre() + "!", panelJuego.getWidth() / 2 - 200,
+		g.drawString("¡Datos del " + aux.getNombre() + "!", panelJuego.getWidth() / 2 - 200,
 				panelJuego.getHeight() / 2 - 150);
 		g.drawString("Victorias -> " + aux.getVictorias(), panelJuego.getWidth() / 2 - 450,
 				panelJuego.getHeight() / 2 - 60);

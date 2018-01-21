@@ -29,7 +29,7 @@ public class LeerFicheroScore {
 			// Leer fichero
 			jugador = (Jugador) ois.readObject();
 		} catch (FileNotFoundException e) {
-			System.out.println("Error al encontrar el fichero.");
+			// System.out.println("Error al encontrar el fichero.");
 		} catch (IOException e) {
 			// System.out.println("\n --- Fin de lectura ---\n");
 		} catch (ClassNotFoundException e) {
